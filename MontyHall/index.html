@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>The Monty Hall Problem</title>
-    <link rel="icon" type="image/png" href="http://www.faviconer.com/uploads/192/122/favicon.png" />
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
     <link href="css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
     body {
@@ -31,7 +31,7 @@
     
     .picture {
         width: 20em;
-        height: 10em;
+        /*height: 10em;*/
     }
     
     #newSettings {
@@ -48,25 +48,42 @@
     var myGuess = -1;
     var possibilities = [1, 2, 3];
     var rand = Math.random();
-    var winner = 1;
-    if (rand > 0.33 && rand < 0.66) {
-        winner = 2;
-    } else if (rand > 0.66) {
-        winner = 3;
-    };
+    var winner = possibilities[Math.floor(rand * 3)]
+    // var winner = 1;
+    // if (rand > 0.33 && rand < 0.66) {
+    //     winner = 2;
+    // } else if (rand > 0.66) {
+    //     winner = 3;
+    // };
+    // console.log(winner)
 
     function submitGuess(number) {
         myGuess = number;
         document.getElementById('initialSettings').style.display = "none";
         possibilities.splice(possibilities.indexOf(number), 1);
-        document.getElementById('newSettings').style.display = "block";
-        if (Math.random() < 0.5) {
+        if (myGuess != winner) {
+            possibilities.splice(possibilities.indexOf(winner), 1);
             filename = 'open' + possibilities[0];
             document.getElementById(filename).style.display = "inline";
-        } else {
-            filename = 'open' + possibilities[1];
-            document.getElementById(filename).style.display = "inline";
+        }
+        else {
+            if (Math.random() < 0.5) {
+                filename = 'open' + possibilities[0];
+                document.getElementById(filename).style.display = "inline";
+            } else {
+                filename = 'open' + possibilities[1];
+                document.getElementById(filename).style.display = "inline";
+            };
         };
+        document.getElementById('newSettings').style.display = "block";
+         document.getElementById('yourChoice').innerHTML = "You chose door " + number;
+        // if (Math.random() < 0.5) {
+        //     filename = 'open' + possibilities[0];
+        //     document.getElementById(filename).style.display = "inline";
+        // } else {
+        //     filename = 'open' + possibilities[1];
+        //     document.getElementById(filename).style.display = "inline";
+        // };
     };
 
     function makeDecision(sOrS) {
@@ -91,12 +108,14 @@
     	myGuess = -1;
     	possibilities = [1, 2, 3];
     	rand = Math.random();
-    	winner = 1;
-	    if (rand > 0.33 && rand < 0.66) {
-	        winner = 2;
-	    } else if (rand > 0.66) {
-	        winner = 3;
-	    };
+        winner = possibilities[Math.floor(rand * 3)]
+    	// winner = 1;
+	    // if (rand > 0.33 && rand < 0.66) {
+	    //     winner = 2;
+	    // } else if (rand > 0.66) {
+	    //     winner = 3;
+	    // };
+        // console.log(winner)
 
 	    document.getElementById('open1').style.display = "none";
 	    document.getElementById('open2').style.display = "none";
@@ -128,6 +147,7 @@
         </button>
     </div>
     <div class="interactive" id="newSettings" class="newSettings">
+        <p id="yourChoice"></p>
         <img src="images/open1.png" id="open1" class="picture" style="display:none">
         <img src="images/open2.png" id="open2" class="picture" style="display:none">
         <img src="images/open3.png" id="open3" class="picture" style="display:none">
@@ -140,8 +160,8 @@
         </button>
     </div>
     <div class="interactive" id="result">
-        <img class="winbanner" id="winbanner" src="loss.png" style="display:none">
-        <img class="losebanner" id="losebanner" src="win.png" style="display:none">
+        <img class="winbanner" id="winbanner" src="images/win.png" style="display:none">
+        <img class="losebanner" id="losebanner" src="images/loss.png" style="display:none">
     </div>
 </body>
 </html>
