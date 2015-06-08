@@ -1,51 +1,62 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>The Monty Hall Problem</title>
     <link rel="icon" type="image/png" href="http://www.faviconer.com/uploads/192/122/favicon.png" />
     <link href="css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
-    	body {
-    		min-height: 100%;
-    		background-color: #1abc9c;
-    	}
-
-	    .heading {
-	        width: 100%;
-	        background-color: #1abc9c;
-	        padding: 20px 10px 20px 10px;
-	        font-size: 25px;
-	        color: #ecf0f1;
-	        text-align: center;
-	        font-family: "Trebuchet MS";
-	    }
-	    
-	    .interactive {
-	        width: 100%;
-	        background-color: #2ecc71;
-	        padding: 20px 10px 20px 10px;
-	        font-size: 25px;
-	        color: #ecf0f1;
-	        font-family: "Trebuchet MS";
-	    }
-	    
-	    .picture {
-	        width: 20em;
-	        height: 10em;
-	    }
-
-	    #newSettings {
-	    	text-align:center; 
-	    	display:none;
-	    }
+    body {
+        min-height: 100%;
+        background-color: #2ecc71;
+    }
+    
+    .heading {
+        width: 100%;
+        background-color: #1abc9c;
+        padding: 20px 10px 20px 10px;
+        font-size: 25px;
+        color: #ecf0f1;
+        text-align: center;
+        font-family: "Trebuchet MS";
+    }
+    
+    .interactive {
+        width: 100%;
+        background-color: #2ecc71;
+        padding: 20px 10px 20px 10px;
+        font-size: 25px;
+        color: #ecf0f1;
+        font-family: "Trebuchet MS";
+    }
+    
+    .picture {
+        width: 20em;
+        height: 10em;
+    }
+    
+    #newSettings {
+        text-align: center;
+        display: none;
+    }
+    
+    #result {
+        text-align: center;
+        display: none;
+    }
     </style>
     <script type="text/javascript">
     var myGuess = -1;
     var possibilities = [1, 2, 3];
+    var rand = Math.random();
+    var winner = 1;
+    if (rand > 0.33 && rand < 0.66) {
+        winner = 2;
+    } else if (rand > 0.66) {
+        winner = 3;
+    };
 
     function submitGuess(number) {
-    	myGuess = number;
+        myGuess = number;
         document.getElementById('initialSettings').style.display = "none";
         possibilities.splice(possibilities.indexOf(number), 1);
         document.getElementById('newSettings').style.display = "block";
@@ -56,6 +67,45 @@
             filename = 'open' + possibilities[1];
             document.getElementById(filename).style.display = "inline";
         };
+    };
+
+    function makeDecision(sOrS) {
+        document.getElementById('newSettings').style.display = "none";
+        document.getElementById('result').style.display = "block";
+        if (sOrS == 'stay') {
+            if (myGuess == winner) {
+                document.getElementById('winbanner').style.display = "inline";
+            } else {
+                document.getElementById('losebanner').style.display = "inline";
+            };
+        } else {
+            if (myGuess == winner) {
+                document.getElementById('losebanner').style.display = "inline";
+            } else {
+                document.getElementById('winbanner').style.display = "inline";
+            };
+        };
+    }
+
+    function reset() {
+    	myGuess = -1;
+    	possibilities = [1, 2, 3];
+    	rand = Math.random();
+    	winner = 1;
+	    if (rand > 0.33 && rand < 0.66) {
+	        winner = 2;
+	    } else if (rand > 0.66) {
+	        winner = 3;
+	    };
+
+	    document.getElementById('open1').style.display = "none";
+	    document.getElementById('open2').style.display = "none";
+	    document.getElementById('open3').style.display = "none";
+	    document.getElementById('newSettings').style.display = "none";
+	    document.getElementById('result').style.display = "none";
+	    document.getElementById('winbanner').style.display = "none";
+	    document.getElementById('losebanner').style.display = "none";
+	    document.getElementById('initialSettings').style.display = "block";
     }
     </script>
 </head>
@@ -63,6 +113,7 @@
 <body>
     <div class="heading">
         <h1>The Monty Hall Problem</h1>
+    	<button type="button" class="btn btn-default btn-lg" onclick="reset()" style="float: center">Reset</button>
     </div>
     <div class="interactive" id="initialSettings" style="text-align:center">
         <img src="images/doors.png" id="initialDoors" class="picture">
@@ -80,9 +131,17 @@
         <img src="images/open1.png" id="open1" class="picture" style="display:none">
         <img src="images/open2.png" id="open2" class="picture" style="display:none">
         <img src="images/open3.png" id="open3" class="picture" style="display:none">
-		</br></br>
-		<p>Stay or Switch?</p>
+        </br>
+        </br>
+        <p>Stay or Switch?</p>
+        <button type="button" class="btn btn-default btn-lg" onclick="makeDecision('stay')" style="float: center">Stay
+        </button>
+        <button type="button" class="btn btn-default btn-lg" onclick="makeDecision('switch')" style="float: center">Switch
+        </button>
+    </div>
+    <div class="interactive" id="result">
+        <img class="winbanner" id="winbanner" src="loss.png" style="display:none">
+        <img class="losebanner" id="losebanner" src="win.png" style="display:none">
     </div>
 </body>
-
 </html>
