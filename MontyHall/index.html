@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>The Monty Hall Problem</title>
+    <link rel="icon" type="image/png" href="http://www.faviconer.com/uploads/192/122/favicon.png" />
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+    	.html {
+    		min-height: 100%;
+    	}
+    	.body {
+    		min-height: 100%;
+    		background-color: #1abc9c;
+    	}
+	    .heading {
+	        width: 100%;
+	        background-color: #1abc9c;
+	        padding: 20px 10px 20px 10px;
+	        font-size: 25px;
+	        color: #ecf0f1;
+	        text-align: center;
+	        font-family: "Trebuchet MS";
+	    }
+	    
+	    .interactive {
+	        width: 100%;
+	        background-color: #2ecc71;
+	        padding: 20px 10px 20px 10px;
+	        font-size: 25px;
+	        color: #ecf0f1;
+	        font-family: "Trebuchet MS";
+	    }
+	    
+	    .picture {
+	        width: 20em;
+	        height: 10em;
+	    }
+    </style>
+    <script type="text/javascript">
+    var possibilities = [1, 2, 3];
+
+    function submitGuess(number) {
+        document.getElementById('initialSettings').style.display = "none";
+        possibilities.splice(possibilities.indexOf(number), 1);
+        if (Math.random() < 0.5) {
+            filename = 'open' + possibilities[0];
+            document.getElementById(filename).style.display = "inline";
+        } else {
+            filename = 'open' + possibilities[1];
+            document.getElementById(filename).style.display = "inline";
+        };
+    }
+    </script>
+</head>
+
+<body>
+    <div class="heading">
+        <h1>The Monty Hall Problem</h1>
+    </div>
+    <div class="interactive" id="initialSettings" style="text-align:center">
+        <img src="images/doors.png" id="initialDoors" class="picture">
+        </br>
+        </br>
+        <p>Select a Door</p>
+        <button type="button" class="btn btn-default btn-lg" onclick="submitGuess(1)" style="float: center">1
+        </button>
+        <button type="button" class="btn btn-default btn-lg" onclick="submitGuess(2)" style="float: center">2
+        </button>
+        <button type="button" class="btn btn-default btn-lg" onclick="submitGuess(3)" style="float: center">3
+        </button>
+    </div>
+    <div class="interactive" id="newSettings" style="text-align:center" style="display:none">
+        <img src="images/open1.png" id="open1" class="picture" style="display:none">
+        <img src="images/open2.png" id="open2" class="picture" style="display:none">
+        <img src="images/open3.png" id="open3" class="picture" style="display:none">
+        <!-- 		</br></br>
+		<p>Stay or Switch?</p> -->
+    </div>
+</body>
+
+</html>
