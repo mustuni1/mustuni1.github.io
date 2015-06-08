@@ -6,13 +6,11 @@
     <link rel="icon" type="image/png" href="http://www.faviconer.com/uploads/192/122/favicon.png" />
     <link href="css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
-    	.html {
-    		min-height: 100%;
-    	}
-    	.body {
+    	body {
     		min-height: 100%;
     		background-color: #1abc9c;
     	}
+
 	    .heading {
 	        width: 100%;
 	        background-color: #1abc9c;
@@ -36,13 +34,21 @@
 	        width: 20em;
 	        height: 10em;
 	    }
+
+	    #newSettings {
+	    	text-align:center; 
+	    	display:none;
+	    }
     </style>
     <script type="text/javascript">
+    var myGuess = -1;
     var possibilities = [1, 2, 3];
 
     function submitGuess(number) {
+    	myGuess = number;
         document.getElementById('initialSettings').style.display = "none";
         possibilities.splice(possibilities.indexOf(number), 1);
+        document.getElementById('newSettings').style.display = "block";
         if (Math.random() < 0.5) {
             filename = 'open' + possibilities[0];
             document.getElementById(filename).style.display = "inline";
@@ -70,12 +76,12 @@
         <button type="button" class="btn btn-default btn-lg" onclick="submitGuess(3)" style="float: center">3
         </button>
     </div>
-    <div class="interactive" id="newSettings" style="text-align:center" style="display:none">
+    <div class="interactive" id="newSettings" class="newSettings">
         <img src="images/open1.png" id="open1" class="picture" style="display:none">
         <img src="images/open2.png" id="open2" class="picture" style="display:none">
         <img src="images/open3.png" id="open3" class="picture" style="display:none">
-        <!-- 		</br></br>
-		<p>Stay or Switch?</p> -->
+		</br></br>
+		<p>Stay or Switch?</p>
     </div>
 </body>
 
