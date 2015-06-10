@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>The Monty Hall Problem</title>
     <link rel="icon" type="image/png" href="/images/favicon.png" />
@@ -43,19 +44,17 @@
         text-align: center;
         display: none;
     }
+
+    .td {
+        padding: 5px 10px 5px 10px;
+    }
     </style>
     <script type="text/javascript">
+    var winsLosses = [0, 0, 0, 0] // switchWin, switchLoss, stayWin, stayLoss
     var myGuess = -1;
     var possibilities = [1, 2, 3];
     var rand = Math.random();
     var winner = possibilities[Math.floor(rand * 3)]
-    // var winner = 1;
-    // if (rand > 0.33 && rand < 0.66) {
-    //     winner = 2;
-    // } else if (rand > 0.66) {
-    //     winner = 3;
-    // };
-    // console.log(winner)
 
     function submitGuess(number) {
         myGuess = number;
@@ -65,8 +64,7 @@
             possibilities.splice(possibilities.indexOf(winner), 1);
             filename = 'open' + possibilities[0];
             document.getElementById(filename).style.display = "inline";
-        }
-        else {
+        } else {
             if (Math.random() < 0.5) {
                 filename = 'open' + possibilities[0];
                 document.getElementById(filename).style.display = "inline";
@@ -76,14 +74,7 @@
             };
         };
         document.getElementById('newSettings').style.display = "block";
-         document.getElementById('yourChoice').innerHTML = "You chose door " + number;
-        // if (Math.random() < 0.5) {
-        //     filename = 'open' + possibilities[0];
-        //     document.getElementById(filename).style.display = "inline";
-        // } else {
-        //     filename = 'open' + possibilities[1];
-        //     document.getElementById(filename).style.display = "inline";
-        // };
+        document.getElementById('yourChoice').innerHTML = "You chose door " + number;
     };
 
     function makeDecision(sOrS) {
@@ -91,40 +82,42 @@
         document.getElementById('result').style.display = "block";
         if (sOrS == 'stay') {
             if (myGuess == winner) {
+                winsLosses[2]++;
                 document.getElementById('winbanner').style.display = "inline";
             } else {
+                winsLosses[3]++;
                 document.getElementById('losebanner').style.display = "inline";
             };
         } else {
             if (myGuess == winner) {
+                winsLosses[1]++;
                 document.getElementById('losebanner').style.display = "inline";
             } else {
+                winsLosses[0]++;
                 document.getElementById('winbanner').style.display = "inline";
             };
         };
+        // switchWin, switchLoss, stayWin, stayLoss
+        document.getElementById('switchWin').innerHTML = winsLosses[0];
+        document.getElementById('switchLoss').innerHTML = winsLosses[1];
+        document.getElementById('stayWin').innerHTML = winsLosses[2];
+        document.getElementById('stayLoss').innerHTML = winsLosses[3];
     }
 
     function reset() {
-    	myGuess = -1;
-    	possibilities = [1, 2, 3];
-    	rand = Math.random();
+        myGuess = -1;
+        possibilities = [1, 2, 3];
+        rand = Math.random();
         winner = possibilities[Math.floor(rand * 3)]
-    	// winner = 1;
-	    // if (rand > 0.33 && rand < 0.66) {
-	    //     winner = 2;
-	    // } else if (rand > 0.66) {
-	    //     winner = 3;
-	    // };
-        // console.log(winner)
 
-	    document.getElementById('open1').style.display = "none";
-	    document.getElementById('open2').style.display = "none";
-	    document.getElementById('open3').style.display = "none";
-	    document.getElementById('newSettings').style.display = "none";
-	    document.getElementById('result').style.display = "none";
-	    document.getElementById('winbanner').style.display = "none";
-	    document.getElementById('losebanner').style.display = "none";
-	    document.getElementById('initialSettings').style.display = "block";
+        document.getElementById('open1').style.display = "none";
+        document.getElementById('open2').style.display = "none";
+        document.getElementById('open3').style.display = "none";
+        document.getElementById('newSettings').style.display = "none";
+        document.getElementById('result').style.display = "none";
+        document.getElementById('winbanner').style.display = "none";
+        document.getElementById('losebanner').style.display = "none";
+        document.getElementById('initialSettings').style.display = "block";
     }
     </script>
 </head>
@@ -132,7 +125,6 @@
 <body>
     <div class="heading">
         <h1>The Monty Hall Problem</h1>
-    	<button type="button" class="btn btn-default btn-lg" onclick="reset()" style="float: center">Reset</button>
     </div>
     <div class="interactive" id="initialSettings" style="text-align:center">
         <img src="images/doors.png" id="initialDoors" class="picture">
@@ -162,6 +154,27 @@
     <div class="interactive" id="result">
         <img class="winbanner" id="winbanner" src="images/win.png" style="display:none">
         <img class="losebanner" id="losebanner" src="images/loss.png" style="display:none">
+        </br></br>
+        <table style="margin: auto; border-color:#c0392b" border="2px" >
+            <tr>
+                <td class="td"></td>
+                <td class="td">Wins</td>
+                <td class="td">Losses</td>
+            </tr>
+            <tr>
+                <td class="td">Stay</td>
+                <td id="stayWin" class="td"></td>
+                <td id="stayLoss" class="td"></td>
+            </tr>
+            <tr>
+                <td class="td">Switch</td>
+                <td id="switchWin" class="td"></td>
+                <td id="switchLoss" class="td"></td>
+            </tr>
+        </table>
+        </br>
+        <button type="button" class="btn btn-default btn-lg" onclick="reset()" style="float: center">Reset</button>
     </div>
 </body>
+
 </html>
